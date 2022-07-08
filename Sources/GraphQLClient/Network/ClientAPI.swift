@@ -81,7 +81,7 @@ public class ClientAPI {
         let (data, response) = try await urlSession.asyncData(for: urlRequest)
 
         guard let urlResponse = response as? HTTPURLResponse else {
-            throw NetworkError.invalidResponse(String(data: data, encoding: .utf8) ?? "Oops, somethiwne went wrong casting response.")
+            throw NetworkError.invalidResponse(String(data: data, encoding: .utf8) ?? "Oops, something went wrong casting response.")
         }
 
         guard 200..<400 ~= urlResponse.statusCode else {
