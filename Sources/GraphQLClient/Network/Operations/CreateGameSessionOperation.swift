@@ -11,14 +11,7 @@ struct CreateGameSessionOperation: GQLOperationProtocol {
 
     typealias Response = GameSession
 
-//    enum Variables: String, CaseIterable {
-//        case id
-//        case gameSessionGameId
-//        case currentState
-//        case gameCode
-//        case phaseOneTime
-//        case phaseTwoTime
-//    }
+    
     private static let idVariable = "id"
     private static let gameIdVariable = "gameId"
     private static let currentStateVariable = "currentState"
@@ -31,6 +24,7 @@ struct CreateGameSessionOperation: GQLOperationProtocol {
     private static let titleVariable = "title"
     private static let createdAtVariable = "createdAt"
     private static let updatedAtVariable = "updatedAt"
+    private static let currentTimer = "currentTimer"
 
     private let input: CreateGameSessionInput
 
@@ -51,7 +45,7 @@ struct CreateGameSessionOperation: GQLOperationProtocol {
             Self.imageUrlVariable: .init(input.imageUrl ?? ""),
             Self.descriptionVariable: .init(input.description ?? ""),
             Self.titleVariable: .init(input.title ?? ""),
-            Self.createdAtVariable: .init(DateFormatter.awsISO8601Encode.string(from: Date())),
+            Self.currentTimer: .null
         ]
     }
 }
@@ -69,7 +63,7 @@ mutation createGameSession(
     $\(Self.imageUrlVariable): String,
     $\(Self.descriptionVariable): String,
     $\(Self.titleVariable): String,
-    $\(Self.createdAtVariable): AWSDateTime!
+    $\(Self.currentTimer): Int,
 ) {
     createGameSession(
         input: {
@@ -82,7 +76,7 @@ mutation createGameSession(
             \(Self.descriptionVariable): $\(Self.descriptionVariable)
             \(Self.titleVariable): $\(Self.titleVariable)
             \(Self.isAdvancedVariable): $\(Self.isAdvancedVariable)
-            \(Self.createdAtVariable): $\(Self.createdAtVariable)
+            \(Self.currentTimer): $\(Self.currentTimer)
         }
     ) {
         \(Self.idVariable)
@@ -94,6 +88,7 @@ mutation createGameSession(
         \(Self.imageUrlVariable)
         \(Self.descriptionVariable)
         \(Self.titleVariable)
+        \(Self.currentTimer)
         \(Self.createdAtVariable)
         \(Self.updatedAtVariable)
     }

@@ -12,12 +12,14 @@ public typealias TimeDuration = Int
 
 public struct GameSession: Codable {
     public enum State: String, Codable {
-        case choosingTrickAnswer = "CHOOSING_TRICK_ANSWER"
-        case finished = "FINISHED"
-        case initialIntro = "INITIAL_INTRO"
         case notStarted = "NOT_STARTED"
-        case reviewingResult = "REVIEWING_RESULT"
-        case voting = "VOTING"
+        case teamsJoining = "TEAMS_JOINING"
+        case chooseCorrectAnswer = "CHOOSE_CORRECT_ANSWER"
+        case phase1Results = "PHASE_1_RESULTS"
+        case chooseTrickiestAnswer = "CHOOSE_TRICKIEST_ANSWER"
+        case phase2Results = "PHASE_2_RESULTS"
+        case finalResults = "FINAL_RESULTS"
+        case finished = "FINISHED"
     }
 
     public var id: UUID
@@ -30,6 +32,7 @@ public struct GameSession: Codable {
     public var currentState: State
     public var gameCode: Int
     public var questions: [Question]?
+    public var currentTimer: Int?
     public var updatedAt: Date
     public var createdAt: Date
 }
