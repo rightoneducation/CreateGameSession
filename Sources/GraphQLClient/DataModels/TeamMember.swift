@@ -7,7 +7,7 @@
 
 import Foundation
 
-public typealias TeamMemberID = UUID
+public typealias TeamMemberID = String
 
 public struct TeamMember: Codable {
     public var id: TeamMemberID

@@ -40,7 +40,7 @@ enum CodableWrap: Encodable {
     }
 
     init(_ val: UUID) {
-        self = .init(val.uuidString)
+        self = .init(val.uuidString.lowercased())
     }
 
     func encode(to encoder: Encoder) throws {
