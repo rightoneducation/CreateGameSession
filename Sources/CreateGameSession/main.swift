@@ -33,9 +33,25 @@ struct RequestError: Encodable {
     }
 }
 
-enum APIError: Error {
+enum APIError: Error, CustomStringConvertible, LocalizedError {
     case missingWrongAnswers
+    case gameWithNoQuestions
     case oops
+
+    var description: String {
+        self.localizedDescription
+    }
+
+    var errorDescription: String? {
+        switch self {
+        case .missingWrongAnswers:
+            return "For simple mode, all questions of the game are required to have a non-empty wrongAnswers field"
+        case .gameWithNoQuestions:
+            return "The chosen game has no questions associated to it."
+        case .oops:
+            return "Something went wrong"
+        }
+    }
 }
 
 let jsonEncoder = JSONEncoder()
@@ -83,9 +99,13 @@ func createGameSession(gameId: Int, isAdvancedMode: Bool) async throws-> GameSes
     let api = ClientAPI()
     let game = try await api.fetchGameAsync(id: gameId)
 
+    guard !game.questions.isEmpty else {
+        throw APIError.gameWithNoQuestions
+    }
+print(game)
     if
-        isAdvancedMode == false,
-        game.questions.compactMap({ $0.wrongAnswers }).count == game.questions.count
+        !isAdvancedMode,
+        game.questions.compactMap({ $0.wrongAnswers }).count != game.questions.count
     {
         throw APIError.missingWrongAnswers
     }
