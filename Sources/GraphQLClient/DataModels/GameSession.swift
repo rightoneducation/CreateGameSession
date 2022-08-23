@@ -28,11 +28,12 @@ public struct GameSession: Codable {
     public var phaseOneTime: TimeDuration
     public var phaseTwoTime: TimeDuration
     public var teams: [Team]?
-    public var currentQuestionId: Int?
+    public var currentQuestionIndex: Int?
     public var currentState: State
     public var gameCode: Int
-    public var questions: [Question]?
+    public var questions: GameSessionQuestions?
     public var currentTimer: Int?
+    public var isAdvancedMode: Bool
     public var updatedAt: Date
     public var createdAt: Date
 }

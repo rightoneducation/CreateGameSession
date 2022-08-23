@@ -21,6 +21,7 @@ struct CreateQuestionOperation: GQLOperationProtocol {
     private static let textVariable = "text"
     private static let wrongAnswersVariable = "wrongAnswers"
     private static let gameSessionIdVariable = "gameSessionId"
+    private static let orderVariable = "order"
 
     let input: CreateQuestionInput
 
@@ -30,17 +31,18 @@ struct CreateQuestionOperation: GQLOperationProtocol {
     
     var variables: [String: CodableWrap] {
         [
-            "id": .init(input.id),
-            "answer": .init(input.answer),
-            "cluster": .init(input.cluster),
-            "domain": .init(input.domain),
-            "grade": .init(input.grade),
-            "instructions": .init(input.instructions),
-            "imageUrl": .init(input.imageUrl),
-            "standard": .init(input.standard),
-            "text": .init(input.text),
-            "wrongAnswers": .init(input.wrongAnswers),
-            "gameSessionId": .init(input.gameSessionId),
+            Self.idVariable: .init(input.id),
+            Self.answerVariable: .init(input.answer),
+            Self.clusterStateVariable: .init(input.cluster),
+            Self.domainCodeVariable: .init(input.domain),
+            Self.gradeOneTimeVariable: .init(input.grade),
+            Self.instructionsTwoTimeVariable: .init(input.instructions),
+            Self.imageUrlAdvancedVariable: .init(input.imageUrl),
+            Self.standardVariable: .init(input.standard),
+            Self.textVariable: .init(input.text),
+            Self.wrongAnswersVariable: .init(input.wrongAnswers),
+            Self.gameSessionIdVariable: .init(input.gameSessionId),
+            Self.orderVariable: .init(input.order)
         ]
     }
 }
@@ -60,6 +62,7 @@ mutation createQuestion(
     $\(Self.textVariable): String!,
     $\(Self.wrongAnswersVariable): AWSJSON,
     $\(Self.gameSessionIdVariable): ID!,
+    $\(Self.orderVariable): Int!,
 ) {
     createQuestion(
         input: {
@@ -74,6 +77,7 @@ mutation createQuestion(
             \(Self.textVariable): $\(Self.textVariable)
             \(Self.wrongAnswersVariable): $\(Self.wrongAnswersVariable)
             \(Self.gameSessionIdVariable): $\(Self.gameSessionIdVariable)
+            \(Self.orderVariable): $\(Self.orderVariable)
         }
     ) {
         \(Self.idVariable)
@@ -87,6 +91,7 @@ mutation createQuestion(
         \(Self.textVariable)
         \(Self.wrongAnswersVariable)
         \(Self.gameSessionIdVariable)
+        \(Self.orderVariable)
     }
 }
 """

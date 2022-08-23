@@ -19,8 +19,9 @@ struct CreateQuestionInput {
     var standard: String?
     var text: String?
     var wrongAnswers: String?
+    var order: Int
 
-    init(gameSessionId: GameSesionID, question: Question) {
+    init(gameSessionId: GameSesionID, question: Question, order: Int) {
         self.gameSessionId = gameSessionId
         self.id = question.id
         self.answer = question.answer
@@ -32,5 +33,6 @@ struct CreateQuestionInput {
         self.standard = question.standard
         self.text = question.text
         self.wrongAnswers = question.wrongAnswers
+        self.order = order
     }
 }

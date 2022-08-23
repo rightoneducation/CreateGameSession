@@ -7,8 +7,6 @@
 
 import Foundation
 
-public typealias QuestionID = Int
-
 public struct Question: Codable {
     public var id: QuestionID
     public var answer: String

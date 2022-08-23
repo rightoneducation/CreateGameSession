@@ -50,22 +50,22 @@ public class ClientAPI {
         let input = CreateGameSessionInput(for: game, with: gameCode, isAdvancedMode: isAdvanceMode)
         let operation = CreateGameSessionOperation(input: input)
         var gameSession = try await performOperation(operation, to: .mobile)
-        let questions = try await withThrowingTaskGroup(of: Question.self) { [weak self] group -> [Question] in
+        let questions = try await withThrowingTaskGroup(of: GameSessionQuestion.self) { [weak self] group -> [GameSessionQuestion] in
             guard let self = self else {
                 throw NetworkError.failed(["Opps... failed accessing self"])
             }
-            for question in game.questions {
-                let questionOperation = CreateQuestionOperation(input: .init(gameSessionId: gameSession.id, question: question))
+            for (idx, question) in game.questions.enumerated() {
+                let questionOperation = CreateQuestionOperation(input: .init(gameSessionId: gameSession.id, question: question, order: idx))
                 group.addTask {
-                    return try await self.performOperation(questionOperation, to: .mobile)
+                    let question = try await self.performOperation(questionOperation, to: .mobile)
+                    return GameSessionQuestion(from: question, order: idx)
                 }
             }
             return try await group.reduce(into: []) { result, question in
                 result.append(question)
             }
         }
-
-        gameSession.questions = questions
+        gameSession.questions = GameSessionQuestions(items: questions)
         return gameSession
     }
 

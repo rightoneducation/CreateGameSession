@@ -18,7 +18,7 @@ struct CreateGameSessionOperation: GQLOperationProtocol {
     private static let gameCodeVariable = "gameCode"
     private static let phaseOneTimeVariable = "phaseOneTime"
     private static let phaseTwoTimeVariable = "phaseTwoTime"
-    private static let isAdvancedVariable = "isAdvanced"
+    private static let isAdvancedModeVariable = "isAdvancedMode"
     private static let imageUrlVariable = "imageUrl"
     private static let descriptionVariable = "description"
     private static let titleVariable = "title"
@@ -41,7 +41,7 @@ struct CreateGameSessionOperation: GQLOperationProtocol {
             Self.gameCodeVariable: .init(input.gameCode),
             Self.phaseOneTimeVariable: .init(input.phaseOneTime),
             Self.phaseTwoTimeVariable: .init(input.phaseTwoTime),
-            Self.isAdvancedVariable: .init(input.isAdvancedMode),
+            Self.isAdvancedModeVariable: .init(input.isAdvancedMode),
             Self.imageUrlVariable: .init(input.imageUrl ?? ""),
             Self.descriptionVariable: .init(input.description ?? ""),
             Self.titleVariable: .init(input.title ?? ""),
@@ -59,7 +59,7 @@ mutation createGameSession(
     $\(Self.gameCodeVariable): Int!,
     $\(Self.phaseOneTimeVariable): Int!,
     $\(Self.phaseTwoTimeVariable): Int!,
-    $\(Self.isAdvancedVariable): Boolean!,
+    $\(Self.isAdvancedModeVariable): Boolean!,
     $\(Self.imageUrlVariable): String,
     $\(Self.descriptionVariable): String,
     $\(Self.titleVariable): String,
@@ -75,7 +75,7 @@ mutation createGameSession(
             \(Self.imageUrlVariable): $\(Self.imageUrlVariable)
             \(Self.descriptionVariable): $\(Self.descriptionVariable)
             \(Self.titleVariable): $\(Self.titleVariable)
-            \(Self.isAdvancedVariable): $\(Self.isAdvancedVariable)
+            \(Self.isAdvancedModeVariable): $\(Self.isAdvancedModeVariable)
             \(Self.currentTimer): $\(Self.currentTimer)
         }
     ) {
@@ -89,6 +89,7 @@ mutation createGameSession(
         \(Self.descriptionVariable)
         \(Self.titleVariable)
         \(Self.currentTimer)
+        \(Self.isAdvancedModeVariable)
         \(Self.createdAtVariable)
         \(Self.updatedAtVariable)
     }
