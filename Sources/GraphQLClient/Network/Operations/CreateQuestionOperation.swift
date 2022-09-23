@@ -8,10 +8,10 @@
 import Foundation
 
 struct CreateQuestionOperation: GQLOperationProtocol {
-    typealias Response = Question
+    typealias Response = GameSessionQuestion
 
     private static let idVariable = "id"
-    private static let answerVariable = "answer"
+    private static let choicesVariable = "choices"
     private static let clusterStateVariable = "cluster"
     private static let domainCodeVariable = "domain"
     private static let gradeOneTimeVariable = "grade"
@@ -19,7 +19,6 @@ struct CreateQuestionOperation: GQLOperationProtocol {
     private static let imageUrlAdvancedVariable = "imageUrl"
     private static let standardVariable = "standard"
     private static let textVariable = "text"
-    private static let wrongAnswersVariable = "wrongAnswers"
     private static let gameSessionIdVariable = "gameSessionId"
     private static let orderVariable = "order"
 
@@ -30,9 +29,17 @@ struct CreateQuestionOperation: GQLOperationProtocol {
     }
     
     var variables: [String: CodableWrap] {
-        [
+        let choicesValue: CodableWrap
+        if
+            let choicesData = try? JSONEncoder().encode(input.choices),
+            let choicesStr = String(data: choicesData, encoding: .utf8) {
+            choicesValue = .init(choicesStr)
+        } else {
+            choicesValue = .null
+        }
+        return [
             Self.idVariable: .init(input.id),
-            Self.answerVariable: .init(input.answer),
+            Self.choicesVariable: choicesValue,
             Self.clusterStateVariable: .init(input.cluster),
             Self.domainCodeVariable: .init(input.domain),
             Self.gradeOneTimeVariable: .init(input.grade),
@@ -40,7 +47,6 @@ struct CreateQuestionOperation: GQLOperationProtocol {
             Self.imageUrlAdvancedVariable: .init(input.imageUrl),
             Self.standardVariable: .init(input.standard),
             Self.textVariable: .init(input.text),
-            Self.wrongAnswersVariable: .init(input.wrongAnswers),
             Self.gameSessionIdVariable: .init(input.gameSessionId),
             Self.orderVariable: .init(input.order)
         ]
@@ -52,7 +58,7 @@ extension CreateQuestionOperation {
 """
 mutation createQuestion(
     $\(Self.idVariable): Int!,
-    $\(Self.answerVariable): String!,
+    $\(Self.choicesVariable): AWSJSON!,
     $\(Self.clusterStateVariable): String,
     $\(Self.domainCodeVariable): String,
     $\(Self.gradeOneTimeVariable): String,
@@ -60,14 +66,13 @@ mutation createQuestion(
     $\(Self.imageUrlAdvancedVariable): String,
     $\(Self.standardVariable): String,
     $\(Self.textVariable): String!,
-    $\(Self.wrongAnswersVariable): AWSJSON,
     $\(Self.gameSessionIdVariable): ID!,
     $\(Self.orderVariable): Int!,
 ) {
     createQuestion(
         input: {
             \(Self.idVariable): $\(Self.idVariable)
-            \(Self.answerVariable): $\(Self.answerVariable)
+            \(Self.choicesVariable): $\(Self.choicesVariable)
             \(Self.clusterStateVariable): $\(Self.clusterStateVariable)
             \(Self.domainCodeVariable): $\(Self.domainCodeVariable)
             \(Self.gradeOneTimeVariable): $\(Self.gradeOneTimeVariable)
@@ -75,13 +80,12 @@ mutation createQuestion(
             \(Self.imageUrlAdvancedVariable): $\(Self.imageUrlAdvancedVariable)
             \(Self.standardVariable): $\(Self.standardVariable)
             \(Self.textVariable): $\(Self.textVariable)
-            \(Self.wrongAnswersVariable): $\(Self.wrongAnswersVariable)
             \(Self.gameSessionIdVariable): $\(Self.gameSessionIdVariable)
             \(Self.orderVariable): $\(Self.orderVariable)
         }
     ) {
         \(Self.idVariable)
-        \(Self.answerVariable)
+        \(Self.choicesVariable)
         \(Self.clusterStateVariable)
         \(Self.domainCodeVariable)
         \(Self.gradeOneTimeVariable)
@@ -89,7 +93,6 @@ mutation createQuestion(
         \(Self.imageUrlAdvancedVariable)
         \(Self.standardVariable)
         \(Self.textVariable)
-        \(Self.wrongAnswersVariable)
         \(Self.gameSessionIdVariable)
         \(Self.orderVariable)
     }

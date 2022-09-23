@@ -8,8 +8,14 @@
 import Foundation
 
 public struct Question: Codable {
+    public struct Choice: Codable {
+        public var text: String
+        public var isAnswer: Bool
+        public var reason: String?
+    }
+
     public var id: QuestionID
-    public var answer: String
+    public var choices: [Choice]
     public var cluster: String?
     public var domain: String?
     public var grade: String?
@@ -17,5 +23,41 @@ public struct Question: Codable {
     public var imageUrl: String?
     public var standard: String?
     public var text: String?
-    public var wrongAnswers: String?
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(QuestionID.self, forKey: .id)
+        let unparsedChoices = try container.decode(String.self, forKey: .choices)
+        self.choices = try Choice.parseAppsyncResponse(unparsedChoices).shuffled()
+        self.cluster = try container.decodeIfPresent(String.self, forKey: .cluster)
+        self.domain = try container.decodeIfPresent(String.self, forKey: .domain)
+        self.grade = try container.decodeIfPresent(String.self, forKey: .grade)
+        self.instructions = try container.decodeIfPresent(String.self, forKey: .instructions)
+        self.imageUrl = try container.decodeIfPresent(String.self, forKey: .imageUrl)
+        self.standard = try container.decodeIfPresent(String.self, forKey: .standard)
+        self.text = try container.decodeIfPresent(String.self, forKey: .text)
+    }
+}
+
+extension Question.Choice {
+    static func parseAppsyncResponse(_ str: String) throws -> [Question.Choice] {
+        let choicesUnparsed: String
+        if
+            let choicesData = str.data(using: .utf8),
+            let choicesStr = try? JSONDecoder().decode(String.self, from: choicesData)
+        {
+            choicesUnparsed = choicesStr
+        } else {
+            choicesUnparsed = str
+        }
+
+        guard
+            let choicesStrData = choicesUnparsed.data(using: .utf8),
+            let parsedChoices = try? JSONDecoder().decode([Question.Choice].self, from: choicesStrData)
+        else {
+            throw ClientAPI.NetworkError.failed(["Failed to parse `choices` field"])
+        }
+
+        return parsedChoices
+    }
 }

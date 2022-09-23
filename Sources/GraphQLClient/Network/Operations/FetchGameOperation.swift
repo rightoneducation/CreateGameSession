@@ -45,7 +45,7 @@ query game($\(Self.gameIDVariable): Int!) {
     updatedAt
     questions {
       id
-      answer
+      choices
       cluster
       domain
       grade
@@ -54,7 +54,6 @@ query game($\(Self.gameIDVariable): Int!) {
       standard
       text
       updatedAt
-      wrongAnswers
     }
   }
 }

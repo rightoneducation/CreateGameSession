@@ -11,7 +11,6 @@ let package = Package(
         .package(url: "https://github.com/awslabs/aws-sdk-swift", .upToNextMajor(from: "0.2.3")),
         .package(url: "https://github.com/maniramezan/Grallistrix", branch: "main"),
         .package(url: "https://github.com/apple/swift-async-algorithms", .upToNextMajor(from: "0.0.1")),
-//        .package(url: "https://github.com/swift-server/async-http-client.git", .upToNextMajor(from: "1.10.0")),
     ],
     targets: [
         .executableTarget(

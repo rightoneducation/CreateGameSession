@@ -10,7 +10,7 @@ import Foundation
 struct CreateQuestionInput {
     var gameSessionId: GameSesionID
     var id: QuestionID
-    var answer: String
+    var choices: [Question.Choice]
     var cluster: String?
     var domain: String?
     var grade: String?
@@ -18,13 +18,12 @@ struct CreateQuestionInput {
     var imageUrl: String?
     var standard: String?
     var text: String?
-    var wrongAnswers: String?
     var order: Int
 
     init(gameSessionId: GameSesionID, question: Question, order: Int) {
         self.gameSessionId = gameSessionId
         self.id = question.id
-        self.answer = question.answer
+        self.choices = question.choices
         self.cluster = question.cluster
         self.domain = question.domain
         self.grade = question.grade
@@ -32,7 +31,6 @@ struct CreateQuestionInput {
         self.imageUrl = question.imageUrl
         self.standard = question.standard
         self.text = question.text
-        self.wrongAnswers = question.wrongAnswers
         self.order = order
     }
 }

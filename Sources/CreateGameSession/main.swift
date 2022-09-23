@@ -45,7 +45,7 @@ enum APIError: Error, CustomStringConvertible, LocalizedError {
     var errorDescription: String? {
         switch self {
         case .missingWrongAnswers:
-            return "For simple mode, all questions of the game are required to have a non-empty wrongAnswers field"
+            return "For simple mode, all questions of the game are required to have a wrong answers in choices"
         case .gameWithNoQuestions:
             return "The chosen game has no questions associated to it."
         case .oops:
@@ -99,13 +99,15 @@ func createGameSession(gameId: Int, isAdvancedMode: Bool) async throws-> GameSes
     let api = ClientAPI()
     let game = try await api.fetchGameAsync(id: gameId)
 
+    let totalAnswersPerQuestion = 4
+
     guard !game.questions.isEmpty else {
         throw APIError.gameWithNoQuestions
     }
-print(game)
+
     if
         !isAdvancedMode,
-        game.questions.compactMap({ $0.wrongAnswers }).count != game.questions.count
+        game.questions.map({ $0.choices.count }).reduce(0, +) != game.questions.count * totalAnswersPerQuestion
     {
         throw APIError.missingWrongAnswers
     }

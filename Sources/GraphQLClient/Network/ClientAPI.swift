@@ -57,8 +57,7 @@ public class ClientAPI {
             for (idx, question) in game.questions.enumerated() {
                 let questionOperation = CreateQuestionOperation(input: .init(gameSessionId: gameSession.id, question: question, order: idx))
                 group.addTask {
-                    let question = try await self.performOperation(questionOperation, to: .mobile)
-                    return GameSessionQuestion(from: question, order: idx)
+                    try await self.performOperation(questionOperation, to: .mobile)
                 }
             }
             return try await group.reduce(into: []) { result, question in
