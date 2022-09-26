@@ -15,7 +15,7 @@ public struct GameSessionQuestion: Codable {
     public var cluster: String?
     public var domain: String?
     public var grade: String?
-    public var instructions: String?
+    public var instructions: [String]?
     public var imageUrl: String?
     public var standard: String?
     public var text: String?
@@ -42,7 +42,14 @@ public struct GameSessionQuestion: Codable {
         self.cluster = try container.decodeIfPresent(String.self, forKey: .cluster)
         self.domain = try container.decodeIfPresent(String.self, forKey: .domain)
         self.grade = try container.decodeIfPresent(String.self, forKey: .grade)
-        self.instructions = try container.decodeIfPresent(String.self, forKey: .instructions)
+        if
+            let unparsedInstructions = try container.decodeIfPresent(String.self, forKey: .instructions),
+            let instructionsData = unparsedInstructions.data(using: .utf8)
+        {
+            self.instructions = try JSONDecoder().decode([String].self, from: instructionsData)
+        } else {
+            self.instructions = nil
+        }
         self.imageUrl = try container.decodeIfPresent(String.self, forKey: .imageUrl)
         self.standard = try container.decodeIfPresent(String.self, forKey: .standard)
         self.text = try container.decodeIfPresent(String.self, forKey: .text)

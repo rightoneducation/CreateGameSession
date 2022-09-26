@@ -36,15 +36,15 @@ struct CreateGameSessionOperation: GQLOperationProtocol {
 
     var variables: [String: CodableWrap] {
         [
-            Self.gameIdVariable: .init(input.gameId),
+            Self.gameIdVariable: .int(input.gameId),
             Self.currentStateVariable: .init(input.currentState),
-            Self.gameCodeVariable: .init(input.gameCode),
-            Self.phaseOneTimeVariable: .init(input.phaseOneTime),
-            Self.phaseTwoTimeVariable: .init(input.phaseTwoTime),
-            Self.isAdvancedModeVariable: .init(input.isAdvancedMode),
-            Self.imageUrlVariable: .init(input.imageUrl ?? ""),
-            Self.descriptionVariable: .init(input.description ?? ""),
-            Self.titleVariable: .init(input.title ?? ""),
+            Self.gameCodeVariable: .int(input.gameCode),
+            Self.phaseOneTimeVariable: .int(input.phaseOneTime),
+            Self.phaseTwoTimeVariable: .int(input.phaseTwoTime),
+            Self.isAdvancedModeVariable: .bool(input.isAdvancedMode),
+            Self.imageUrlVariable: .string(input.imageUrl ?? ""),
+            Self.descriptionVariable: .string(input.description ?? ""),
+            Self.titleVariable: .string(input.title ?? ""),
             Self.currentTimer: .null
         ]
     }

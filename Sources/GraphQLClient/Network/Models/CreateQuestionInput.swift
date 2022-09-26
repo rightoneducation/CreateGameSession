@@ -27,7 +27,11 @@ struct CreateQuestionInput {
         self.cluster = question.cluster
         self.domain = question.domain
         self.grade = question.grade
-        self.instructions = question.instructions
+        if let encodedInstructions = try? JSONEncoder().encode(question.instructions ?? []) {
+            self.instructions = String(data: encodedInstructions, encoding: .utf8)
+        } else {
+            self.instructions = ""
+        }
         self.imageUrl = question.imageUrl
         self.standard = question.standard
         self.text = question.text

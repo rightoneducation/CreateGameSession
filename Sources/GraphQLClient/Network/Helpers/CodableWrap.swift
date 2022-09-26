@@ -10,22 +10,10 @@ import Foundation
 
 enum CodableWrap: Encodable {
     case string(String)
+    case stringArray([String]?)
     case int(Int)
     case bool(Bool)
     case null
-
-
-    init(_ str: String) {
-        self = .string(str)
-    }
-
-    init(_ val: Int) {
-        self = .int(val)
-    }
-
-    init(_ val: Bool) {
-        self = .bool(val)
-    }
 
     init<T>(_ val: T) where T: RawRepresentable, T.RawValue == String {
         self = .string(val.rawValue)
@@ -51,6 +39,8 @@ enum CodableWrap: Encodable {
         case .int(let val):
             try container.encode(val)
         case .bool(let val):
+            try container.encode(val)
+        case .stringArray(let val):
             try container.encode(val)
         case .null:
             try container.encodeNil()

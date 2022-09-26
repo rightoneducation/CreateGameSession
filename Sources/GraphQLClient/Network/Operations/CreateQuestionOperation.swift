@@ -38,7 +38,7 @@ struct CreateQuestionOperation: GQLOperationProtocol {
             choicesValue = .null
         }
         return [
-            Self.idVariable: .init(input.id),
+            Self.idVariable: .int(input.id),
             Self.choicesVariable: choicesValue,
             Self.clusterStateVariable: .init(input.cluster),
             Self.domainCodeVariable: .init(input.domain),
@@ -48,7 +48,7 @@ struct CreateQuestionOperation: GQLOperationProtocol {
             Self.standardVariable: .init(input.standard),
             Self.textVariable: .init(input.text),
             Self.gameSessionIdVariable: .init(input.gameSessionId),
-            Self.orderVariable: .init(input.order)
+            Self.orderVariable: .int(input.order)
         ]
     }
 }
