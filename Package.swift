@@ -7,17 +7,15 @@ let package = Package(
     name: "CreateGameSession",
     platforms: [.macOS(.v12)],
     dependencies: [
-        .package(url: "https://github.com/swift-server/swift-aws-lambda-runtime", .upToNextMajor(from: "0.5.2")),
-        .package(url: "https://github.com/awslabs/aws-sdk-swift", .upToNextMajor(from: "0.2.3")),
-        .package(url: "https://github.com/maniramezan/Grallistrix", branch: "main"),
-        .package(url: "https://github.com/apple/swift-async-algorithms", .upToNextMajor(from: "0.0.1")),
+        .package(url: "https://github.com/swift-server/swift-aws-lambda-runtime.git", .upToNextMajor(from: "0.5.2")),
+        .package(url: "https://github.com/maniramezan/Grallistrix.git", branch: "main"),
+        .package(url: "https://github.com/apple/swift-async-algorithms.git", .upToNextMajor(from: "0.0.4")),
     ],
     targets: [
         .executableTarget(
             name: "CreateGameSession",
             dependencies: [
                 .product(name: "AWSLambdaRuntime", package: "swift-aws-lambda-runtime"),
-                .product(name: "AWSDynamoDB", package: "aws-sdk-swift"),
                 .product(name: "Grallistrix", package: "Grallistrix"),
                 .target(name: "GraphQLClient"),
                 .product(name: "AWSLambdaEvents", package: "swift-aws-lambda-runtime"),
