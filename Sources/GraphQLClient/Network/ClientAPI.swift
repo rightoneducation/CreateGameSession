@@ -12,9 +12,6 @@ import AsyncAlgorithms
 import FoundationNetworking
 #endif
 
-//GraphQL endpoint: https://ndd5d3mff5f7ni3cxc4rm6rkky.appsync-api.us-east-1.amazonaws.com/graphql
-//GraphQL API KEY: da2-jtckofyk6vcuzeqg5h647xegta
-
 public class ClientAPI {
     public enum NetworkError: Error {
         case invalidResponse(String)
