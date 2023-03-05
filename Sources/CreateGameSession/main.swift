@@ -88,6 +88,8 @@ Lambda.run { (context, request: APIGateway.V2.Request, callback: @escaping (Resu
                     headers: ["content-type": "application/json"],
                     body: try jsonEncoder.encodeAsString(gameSession))))
         } catch {
+            let errorMessage = "\(context.requestID) \(error.localizedDescription)"
+            context.logger.error(.init(stringLiteral: errorMessage))
             callback(.success(.init(
                 statusCode: .internalServerError,
                 body: RequestError(error: error.localizedDescription).json)))
