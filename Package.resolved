@@ -3,7 +3,7 @@
     {
       "identity" : "grallistrix",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/maniramezan/Grallistrix",
+      "location" : "https://github.com/maniramezan/Grallistrix.git",
       "state" : {
         "branch" : "main",
         "revision" : "260e3747570b84318cbcc20ba1d041553669d27b"
@@ -12,10 +12,10 @@
     {
       "identity" : "swift-async-algorithms",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-async-algorithms",
+      "location" : "https://github.com/apple/swift-async-algorithms.git",
       "state" : {
-        "revision" : "aed5422380244498344a036b8d94e27f370d9a22",
-        "version" : "0.0.4"
+        "revision" : "9cfed92b026c524674ed869a4ff2dcfdeedf8a2a",
+        "version" : "0.1.0"
       }
     },
     {
@@ -30,7 +30,7 @@
     {
       "identity" : "swift-aws-lambda-runtime",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/swift-server/swift-aws-lambda-runtime",
+      "location" : "https://github.com/swift-server/swift-aws-lambda-runtime.git",
       "state" : {
         "revision" : "699ada1724459582303c15aae64fa12ca4d33809",
         "version" : "0.5.2"

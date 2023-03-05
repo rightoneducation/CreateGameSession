@@ -7,9 +7,9 @@ let package = Package(
     name: "CreateGameSession",
     platforms: [.macOS(.v12)],
     dependencies: [
-        .package(url: "https://github.com/swift-server/swift-aws-lambda-runtime.git", .upToNextMajor(from: "0.5.2")),
-        .package(url: "https://github.com/maniramezan/Grallistrix.git", branch: "main"),
-        .package(url: "https://github.com/apple/swift-async-algorithms.git", .upToNextMajor(from: "0.0.4")),
+        .package(url: "https://github.com/swift-server/swift-aws-lambda-runtime", .upToNextMajor(from: "0.5.2")),
+        .package(url: "https://github.com/maniramezan/Grallistrix", branch: "main"),
+        .package(url: "https://github.com/apple/swift-async-algorithms", .upToNextMajor(from: "0.0.4")),
     ],
     targets: [
         .executableTarget(
