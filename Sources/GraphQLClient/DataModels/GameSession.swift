@@ -7,7 +7,7 @@
 
 import Foundation
 
-public typealias GameSesionID = String
+public typealias GameSessionID = String
 public typealias TimeDuration = Int
 
 public struct GameSession: Codable {
@@ -25,7 +25,7 @@ public struct GameSession: Codable {
         case finished = "FINISHED"
     }
 
-    public var id: GameSesionID
+    public var id: GameSessionID
     public var gameId: GameID
     public var startTime: Date?
     public var phaseOneTime: TimeDuration

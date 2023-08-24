@@ -8,7 +8,7 @@
 import Foundation
 
 struct CreateQuestionInput {
-    var gameSessionId: GameSesionID
+    var gameSessionId: GameSessionID
     var id: QuestionID
     var choices: [Question.Choice]
     var cluster: String?
@@ -19,8 +19,10 @@ struct CreateQuestionInput {
     var standard: String?
     var text: String?
     var order: Int
+    var isHintEnabled: Bool
+    var isConfidenceEnabled: Bool
 
-    init(gameSessionId: GameSesionID, question: Question, order: Int) {
+    init(gameSessionId: GameSessionID, question: Question, order: Int) {
         self.gameSessionId = gameSessionId
         self.id = question.id
         self.choices = question.choices
@@ -36,5 +38,7 @@ struct CreateQuestionInput {
         self.standard = question.standard
         self.text = question.text
         self.order = order
+        self.isHintEnabled = false
+        self.isConfidenceEnabled = false
     }
 }

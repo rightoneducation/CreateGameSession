@@ -16,4 +16,5 @@ public struct Team: Codable {
     public var trickiestAnswerIDs: [TeamAnswerID] = []
     public var teamMembers: [TeamMember] = []
     public var score: Int!
+    public var selectedAvatarIndex: Int!
 }

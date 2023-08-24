@@ -65,7 +65,7 @@ Lambda.run { (context, request: APIGateway.V2.Request, callback: @escaping (Resu
         else {
             callback(.success(.init(
                 statusCode: .badRequest,
-                body: RequestError(error: "Invalud request: \(request.context.http.method): \(request.context.http.path)").json)))
+                body: RequestError(error: "Invalid request: \(request.context.http.method): \(request.context.http.path)").json)))
             return
         }
 

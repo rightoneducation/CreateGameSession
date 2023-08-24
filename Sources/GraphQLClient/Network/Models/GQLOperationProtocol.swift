@@ -16,7 +16,7 @@ protocol GQLOperationProtocol: Encodable {
     var variables: [String: VariableType] { get }
 }
 
-// MARK: - Defaukt Implementation
+// MARK: - Default Implementation
 
 extension GQLOperationProtocol {
     var operationName: String? {

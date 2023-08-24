@@ -21,6 +21,8 @@ struct CreateQuestionOperation: GQLOperationProtocol {
     private static let textVariable = "text"
     private static let gameSessionIdVariable = "gameSessionId"
     private static let orderVariable = "order"
+    private static let isHintEnabled = "isHintEnabled"
+    private static let isConfidenceEnabled = "isConfidenceEnabled"
 
     let input: CreateQuestionInput
 
@@ -48,7 +50,9 @@ struct CreateQuestionOperation: GQLOperationProtocol {
             Self.standardVariable: .init(input.standard),
             Self.textVariable: .init(input.text),
             Self.gameSessionIdVariable: .init(input.gameSessionId),
-            Self.orderVariable: .int(input.order)
+            Self.orderVariable: .int(input.order),
+            Self.isHintEnabled: .bool(input.isHintEnabled),
+            Self.isConfidenceEnabled: .bool(input.isConfidenceEnabled),
         ]
     }
 }
@@ -68,6 +72,8 @@ mutation createQuestion(
     $\(Self.textVariable): String!,
     $\(Self.gameSessionIdVariable): ID!,
     $\(Self.orderVariable): Int!,
+    $\(Self.isHintEnabled): Boolean!,
+    $\(Self.isConfidenceEnabled): Boolean!
 ) {
     createQuestion(
         input: {
@@ -82,6 +88,8 @@ mutation createQuestion(
             \(Self.textVariable): $\(Self.textVariable)
             \(Self.gameSessionIdVariable): $\(Self.gameSessionIdVariable)
             \(Self.orderVariable): $\(Self.orderVariable)
+            \(Self.isHintEnabled): $\(Self.isHintEnabled)
+            \(Self.isConfidenceEnabled): $\(Self.isConfidenceEnabled)
         }
     ) {
         \(Self.idVariable)
@@ -95,6 +103,8 @@ mutation createQuestion(
         \(Self.textVariable)
         \(Self.gameSessionIdVariable)
         \(Self.orderVariable)
+        \(Self.isHintEnabled)
+        \(Self.isConfidenceEnabled)
     }
 }
 """
