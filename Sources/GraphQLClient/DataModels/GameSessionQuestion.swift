@@ -22,6 +22,7 @@ public struct GameSessionQuestion: Codable {
     public var order: Int
     public var isHintEnabled: Bool
     public var isConfidenceEnabled: Bool
+    public var isShortAnswerEnabled: Bool
 
     init(from question: Question, order: Int) {
         self.id = question.id
@@ -35,7 +36,8 @@ public struct GameSessionQuestion: Codable {
         self.text = question.text
         self.order = order
         self.isHintEnabled = false
-        self.isConfidenceEnabled = false
+        self.isConfidenceEnabled = true
+        self.isShortAnswerEnabled = false
     }
 
     public init(from decoder: Decoder) throws {
@@ -60,5 +62,6 @@ public struct GameSessionQuestion: Codable {
         self.order = try container.decode(Int.self, forKey: .order)
         self.isHintEnabled = try container.decode(Bool.self, forKey: .isHintEnabled)
         self.isConfidenceEnabled = try container.decode(Bool.self, forKey: .isConfidenceEnabled)
+        self.isShortAnswerEnabled = try container.decode(Bool.self, forKey: .isShortAnswerEnabled)
     }
 }
