@@ -23,6 +23,7 @@ struct CreateQuestionOperation: GQLOperationProtocol {
     private static let orderVariable = "order"
     private static let isHintEnabled = "isHintEnabled"
     private static let isConfidenceEnabled = "isConfidenceEnabled"
+    private static let isShortAnswerEnabled = "isShortAnswerEnabled"
 
     let input: CreateQuestionInput
 
@@ -53,6 +54,7 @@ struct CreateQuestionOperation: GQLOperationProtocol {
             Self.orderVariable: .int(input.order),
             Self.isHintEnabled: .bool(input.isHintEnabled),
             Self.isConfidenceEnabled: .bool(input.isConfidenceEnabled),
+            Self.isShortAnswerEnabled: .bool(input.isShortAnswerEnabled),
         ]
     }
 }
@@ -74,6 +76,7 @@ mutation createQuestion(
     $\(Self.orderVariable): Int!,
     $\(Self.isHintEnabled): Boolean!,
     $\(Self.isConfidenceEnabled): Boolean!
+    $\(Self.isShortAnswerEnabled): Boolean!
 ) {
     createQuestion(
         input: {
@@ -90,6 +93,7 @@ mutation createQuestion(
             \(Self.orderVariable): $\(Self.orderVariable)
             \(Self.isHintEnabled): $\(Self.isHintEnabled)
             \(Self.isConfidenceEnabled): $\(Self.isConfidenceEnabled)
+            \(Self.isShortAnswerEnabled): $\(Self.isShortAnswerEnabled)
         }
     ) {
         \(Self.idVariable)
@@ -105,6 +109,7 @@ mutation createQuestion(
         \(Self.orderVariable)
         \(Self.isHintEnabled)
         \(Self.isConfidenceEnabled)
+        \(Self.isShortAnswerEnabled)
     }
 }
 """
