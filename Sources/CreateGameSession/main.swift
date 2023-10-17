@@ -59,6 +59,7 @@ let jsonDecoder = JSONDecoder()
 
 Lambda.run { (context, request: APIGateway.V2.Request, callback: @escaping (Result<APIGateway.V2.Response, Error>) -> Void) in
     Task {
+        let stage = request.context.stage
         guard
             request.context.http.path.hasSuffix("/createGameSession"),
             case .POST = request.context.http.method
@@ -81,7 +82,7 @@ Lambda.run { (context, request: APIGateway.V2.Request, callback: @escaping (Resu
         }
 
         do {
-            let gameSession = try await createGameSession(gameId: request.gameId, isAdvancedMode: request.isAdvancedMode)
+            let gameSession = try await createGameSession(gameId: request.gameId, isAdvancedMode: request.isAdvancedMode, stage: stage)
             callback(.success(
                 .init(
                     statusCode: .created,
@@ -97,8 +98,8 @@ Lambda.run { (context, request: APIGateway.V2.Request, callback: @escaping (Resu
     }
 }
 
-func createGameSession(gameId: Int, isAdvancedMode: Bool) async throws-> GameSession {
-    let api = ClientAPI()
+func createGameSession(gameId: Int, isAdvancedMode: Bool, stage: String) async throws-> GameSession {
+    let api = ClientAPI(stage: stage)
     let game = try await api.fetchGameAsync(id: gameId)
 
     let totalAnswersPerQuestion = 4
