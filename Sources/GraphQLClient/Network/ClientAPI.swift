@@ -13,6 +13,8 @@ import FoundationNetworking
 #endif
 
 public class ClientAPI {
+    private let stage: String
+    
     public enum NetworkError: Error {
         case invalidResponse(String)
         case invalidRequest
@@ -27,7 +29,8 @@ public class ClientAPI {
 
     private let urlSession: URLSession
 
-    public init(urlSession: URLSession = URLSession.shared) {
+    public init(stage: String, urlSession: URLSession = URLSession.shared) {
+        self.stage = stage
         self.urlSession = urlSession
     }
 
@@ -39,14 +42,14 @@ public class ClientAPI {
 
     public func fetchGameSessionBy(gameCode: Int) async throws -> [GameSession] {
         let operation = FetchGameSessionByCodeOperation(gameCode: gameCode)
-        let result = try await performOperation(operation, to: .mobile)
+        let result = try await performOperation(operation, to: GraphQLEndpoint.mobile(for: self.stage))
         return result.first?.value ?? []
     }
 
     public func createGameSession(for game: Game, with gameCode: Int, isAdvanceMode: Bool) async throws -> GameSession {
         let input = CreateGameSessionInput(for: game, with: gameCode, isAdvancedMode: isAdvanceMode)
         let operation = CreateGameSessionOperation(input: input)
-        var gameSession = try await performOperation(operation, to: .mobile)
+        var gameSession = try await performOperation(operation, to: GraphQLEndpoint.mobile(for: self.stage))
         let questions = try await withThrowingTaskGroup(of: GameSessionQuestion.self) { [weak self] group -> [GameSessionQuestion] in
             guard let self = self else {
                 throw NetworkError.failed(["Opps... failed accessing self"])
@@ -54,7 +57,7 @@ public class ClientAPI {
             for (idx, question) in game.questions.enumerated() {
                 let questionOperation = CreateQuestionOperation(input: .init(gameSessionId: gameSession.id, question: question, order: idx))
                 group.addTask {
-                    try await self.performOperation(questionOperation, to: .mobile)
+                    try await self.performOperation(questionOperation, to: GraphQLEndpoint.mobile(for: self.stage))
                 }
             }
             return try await group.reduce(into: []) { result, question in

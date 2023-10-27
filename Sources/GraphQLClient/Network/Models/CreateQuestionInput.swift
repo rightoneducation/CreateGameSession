@@ -21,6 +21,7 @@ struct CreateQuestionInput {
     var order: Int
     var isHintEnabled: Bool
     var isConfidenceEnabled: Bool
+    var isShortAnswerEnabled: Bool
 
     init(gameSessionId: GameSessionID, question: Question, order: Int) {
         self.gameSessionId = gameSessionId
