@@ -40,5 +40,6 @@ struct CreateQuestionInput {
         self.order = order
         self.isHintEnabled = false
         self.isConfidenceEnabled = false
+        self.isShortAnswerEnabled = false
     }
 }

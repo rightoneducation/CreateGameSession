@@ -36,6 +36,7 @@ public struct GameSessionQuestion: Codable {
         self.order = order
         self.isHintEnabled = false
         self.isConfidenceEnabled = false
+        self.isShortAnswerEnabled = false
     }
 
     public init(from decoder: Decoder) throws {
