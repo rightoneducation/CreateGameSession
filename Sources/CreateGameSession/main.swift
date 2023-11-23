@@ -101,7 +101,7 @@ Lambda.run { (context, request: APIGateway.V2.Request, callback: @escaping (Resu
 func createGameSession(gameId: Int, isAdvancedMode: Bool, stage: String) async throws-> GameSession {
     let api = ClientAPI(stage: stage)
     let game = try await api.fetchGameAsync(id: gameId)
-    
+
     let totalAnswersPerQuestion = 4
 
     guard !game.questions.isEmpty else {
@@ -114,7 +114,7 @@ func createGameSession(gameId: Int, isAdvancedMode: Bool, stage: String) async t
     {
         throw APIError.missingWrongAnswers
     }
-    
+
     var gameCode: Int = 0
 
     while true {
