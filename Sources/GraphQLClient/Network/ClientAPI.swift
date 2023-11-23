@@ -47,10 +47,8 @@ public class ClientAPI {
     }
 
     public func createGameSession(for game: Game, with gameCode: Int, isAdvanceMode: Bool) async throws -> GameSession {
-
         let input = CreateGameSessionInput(for: game, with: gameCode, isAdvancedMode: isAdvanceMode)
         let operation = CreateGameSessionOperation(input: input)
-        
         var gameSession = try await performOperation(operation, to: GraphQLEndpoint.mobile(for: self.stage))
         let questions = try await withThrowingTaskGroup(of: GameSessionQuestion.self) { [weak self] group -> [GameSessionQuestion] in
             guard let self = self else {
