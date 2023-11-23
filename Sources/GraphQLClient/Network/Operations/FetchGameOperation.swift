@@ -46,6 +46,7 @@ query game($\(Self.gameIDVariable): Int!) {
     questions {
       id
       choices
+      answerSettings
       cluster
       domain
       grade
