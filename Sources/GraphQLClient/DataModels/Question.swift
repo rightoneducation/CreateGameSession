@@ -13,9 +13,15 @@ public struct Question: Codable {
         public var isAnswer: Bool
         public var reason: String?
     }
-
+    
+    public struct AnswerSettings: Codable {
+        public var answerType: String
+        public var answerPrecision: String
+    }
+    
     public var id: QuestionID
     public var choices: [Choice]
+    public var answerSettings: AnswerSettings?
     public var cluster: String?
     public var domain: String?
     public var grade: String?
@@ -29,6 +35,12 @@ public struct Question: Codable {
         self.id = try container.decode(QuestionID.self, forKey: .id)
         let unparsedChoices = try container.decode(String.self, forKey: .choices)
         self.choices = try Choice.parseAppsyncResponse(unparsedChoices).shuffled()
+        if let unparsedAnswerSettings = try container.decodeIfPresent(String.self, forKey: .answerSettings),
+           let answerSettingsData = unparsedAnswerSettings.data(using: .utf8) {
+            self.answerSettings = try JSONDecoder().decode(AnswerSettings.self, from: answerSettingsData)
+        } else {
+            self.answerSettings = nil
+        }
         self.cluster = try container.decodeIfPresent(String.self, forKey: .cluster)
         self.domain = try container.decodeIfPresent(String.self, forKey: .domain)
         self.grade = try container.decodeIfPresent(String.self, forKey: .grade)

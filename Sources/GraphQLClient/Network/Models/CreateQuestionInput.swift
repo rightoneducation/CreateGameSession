@@ -11,6 +11,7 @@ struct CreateQuestionInput {
     var gameSessionId: GameSessionID
     var id: QuestionID
     var choices: [Question.Choice]
+    var answerSettings: String?
     var cluster: String?
     var domain: String?
     var grade: String?
@@ -19,14 +20,21 @@ struct CreateQuestionInput {
     var standard: String?
     var text: String?
     var order: Int
-    var isHintEnabled: Bool
     var isConfidenceEnabled: Bool
     var isShortAnswerEnabled: Bool
+    var isHintEnabled: Bool
 
     init(gameSessionId: GameSessionID, question: Question, order: Int) {
         self.gameSessionId = gameSessionId
         self.id = question.id
         self.choices = question.choices
+        if let answerSettings = question.answerSettings,
+            let encodedString = try? JSONEncoder().encode(answerSettings),
+            let jsonString = String(data: encodedString, encoding: .utf8) {
+             self.answerSettings = jsonString
+         } else {
+             self.answerSettings = nil
+         }
         self.cluster = question.cluster
         self.domain = question.domain
         self.grade = question.grade
@@ -39,8 +47,8 @@ struct CreateQuestionInput {
         self.standard = question.standard
         self.text = question.text
         self.order = order
-        self.isHintEnabled = false
         self.isConfidenceEnabled = false
         self.isShortAnswerEnabled = false
+        self.isHintEnabled = true
     }
 }

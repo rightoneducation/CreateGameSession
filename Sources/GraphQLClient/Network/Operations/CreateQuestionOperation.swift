@@ -12,6 +12,7 @@ struct CreateQuestionOperation: GQLOperationProtocol {
 
     private static let idVariable = "id"
     private static let choicesVariable = "choices"
+    private static let answerSettingsVariable = "answerSettings"
     private static let clusterStateVariable = "cluster"
     private static let domainCodeVariable = "domain"
     private static let gradeOneTimeVariable = "grade"
@@ -21,9 +22,9 @@ struct CreateQuestionOperation: GQLOperationProtocol {
     private static let textVariable = "text"
     private static let gameSessionIdVariable = "gameSessionId"
     private static let orderVariable = "order"
-    private static let isHintEnabled = "isHintEnabled"
     private static let isConfidenceEnabled = "isConfidenceEnabled"
     private static let isShortAnswerEnabled = "isShortAnswerEnabled"
+    private static let isHintEnabled = "isHintEnabled"
 
     let input: CreateQuestionInput
 
@@ -40,9 +41,11 @@ struct CreateQuestionOperation: GQLOperationProtocol {
         } else {
             choicesValue = .null
         }
+        
         return [
             Self.idVariable: .int(input.id),
             Self.choicesVariable: choicesValue,
+            Self.answerSettingsVariable: .init(input.answerSettings),
             Self.clusterStateVariable: .init(input.cluster),
             Self.domainCodeVariable: .init(input.domain),
             Self.gradeOneTimeVariable: .init(input.grade),
@@ -52,9 +55,9 @@ struct CreateQuestionOperation: GQLOperationProtocol {
             Self.textVariable: .init(input.text),
             Self.gameSessionIdVariable: .init(input.gameSessionId),
             Self.orderVariable: .int(input.order),
-            Self.isHintEnabled: .bool(input.isHintEnabled),
             Self.isConfidenceEnabled: .bool(input.isConfidenceEnabled),
             Self.isShortAnswerEnabled: .bool(input.isShortAnswerEnabled),
+            Self.isHintEnabled: .bool(input.isHintEnabled),
         ]
     }
 }
@@ -65,6 +68,7 @@ extension CreateQuestionOperation {
 mutation createQuestion(
     $\(Self.idVariable): Int!,
     $\(Self.choicesVariable): AWSJSON!,
+    $\(Self.answerSettingsVariable): AWSJSON,
     $\(Self.clusterStateVariable): String,
     $\(Self.domainCodeVariable): String,
     $\(Self.gradeOneTimeVariable): String,
@@ -74,14 +78,15 @@ mutation createQuestion(
     $\(Self.textVariable): String!,
     $\(Self.gameSessionIdVariable): ID!,
     $\(Self.orderVariable): Int!,
-    $\(Self.isHintEnabled): Boolean!,
     $\(Self.isConfidenceEnabled): Boolean!
     $\(Self.isShortAnswerEnabled): Boolean!
+    $\(Self.isHintEnabled): Boolean!
 ) {
     createQuestion(
         input: {
             \(Self.idVariable): $\(Self.idVariable)
             \(Self.choicesVariable): $\(Self.choicesVariable)
+            \(Self.answerSettingsVariable): $\(Self.answerSettingsVariable)
             \(Self.clusterStateVariable): $\(Self.clusterStateVariable)
             \(Self.domainCodeVariable): $\(Self.domainCodeVariable)
             \(Self.gradeOneTimeVariable): $\(Self.gradeOneTimeVariable)
@@ -91,13 +96,14 @@ mutation createQuestion(
             \(Self.textVariable): $\(Self.textVariable)
             \(Self.gameSessionIdVariable): $\(Self.gameSessionIdVariable)
             \(Self.orderVariable): $\(Self.orderVariable)
-            \(Self.isHintEnabled): $\(Self.isHintEnabled)
             \(Self.isConfidenceEnabled): $\(Self.isConfidenceEnabled)
             \(Self.isShortAnswerEnabled): $\(Self.isShortAnswerEnabled)
+            \(Self.isHintEnabled): $\(Self.isHintEnabled)
         }
     ) {
         \(Self.idVariable)
         \(Self.choicesVariable)
+        \(Self.answerSettingsVariable)
         \(Self.clusterStateVariable)
         \(Self.domainCodeVariable)
         \(Self.gradeOneTimeVariable)
@@ -107,9 +113,9 @@ mutation createQuestion(
         \(Self.textVariable)
         \(Self.gameSessionIdVariable)
         \(Self.orderVariable)
-        \(Self.isHintEnabled)
         \(Self.isConfidenceEnabled)
         \(Self.isShortAnswerEnabled)
+        \(Self.isHintEnabled)
     }
 }
 """
